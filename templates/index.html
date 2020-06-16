@@ -42,9 +42,9 @@
             width: 1600px;
             height: 500px;
             margin: 0px 0px 10px auto;
-            background-image: url('title_picture.jpg');
+            /* Flask 형식으로 배경에 Image를 삽입하였는데 에러가 난다.  */
+            background-image: url('/static/title_picture.jpg'); 
             background-size: cover;
-
             border-radius: 10px;
             text-align: center;
             padding-top: 40px;
@@ -92,7 +92,7 @@
 
         <div class="card-columns">
             <div class="card">
-                <img class="card-img-top" src="title_picture.jpg" alt="Card image cap">
+                <img class="card-img-top" src="{{ url_for('static', filename='title_picture.jpg') }}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">Card title that wraps to a new line</h5>
                     <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
@@ -111,7 +111,7 @@
                 </blockquote>
             </div>
             <div class="card">
-                <img class="card-img-top" src="title_picture.jpg" alt="Card image cap">
+                <img class="card-img-top" src="{{ url_for('static', filename='title_picture.jpg') }}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
@@ -138,7 +138,7 @@
                 </div>
             </div>
             <div class="card">
-                <img class="card-img" src="title_picture.jpg" alt="Card image">
+                <img class="card-img" src="{{ url_for('static', filename='title_picture.jpg') }}" alt="Card image">
             </div>
             <div class="card p-3 text-right">
                 <blockquote class="blockquote mb-0">
