@@ -73,18 +73,14 @@
         }
     </style>
     <script>
-        // $(document).ready(function () {
-        //     // index.html 로드가 완료되면 자동으로 show_star() 함수를 호출합니다.
-        //     show_food();
-        // });
 
         function show_food() {
-            // 1. #food_box의 내부 html 태그를 모두 삭제합니다.
+            // 1. #food_box의 내부 html 태그를 모두 삭제
             $('#food-box').empty()
 
             let location = $('#location').val();
 
-            // 2. 서버에 1) POST 방식으로, 2) /api/food 라는 주소로 foods_list를 요청합니다.
+            // 2. 서버에 1) POST 방식으로, 2) /api/food 라는 주소로 검색어를 보내고 foods_list를 요청
             $.ajax({
                 type: "POST",
                 url: "/api/food",
