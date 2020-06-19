@@ -71,14 +71,79 @@
             font-weight: bold;
             color: lavender;
         }
+
+        .temp_search {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .temp0 {
+            width: 520px;
+            margin: 10px 0px 0px 0px;
+        }
+
+        .temp1 {
+            width: 520px;
+            margin: 10px 0px 0px 20px;
+        }
+
+        .temp2 {
+            width: 520px;
+            margin: 10px 0px 0px 20px;
+        }
+
+        .tempc {
+            margin: 0px 0px 10px 0px;
+            border-radius: 15px;
+        }
     </style>
     <script>
 
-        function show_food() {
-            // 1. #food_box의 내부 html 태그를 모두 삭제
+        function show_everything() {
+            // 1. everything-box의 내부 html 태그를 모두 삭제
             $('#food-box').empty()
+            $('#home-box').empty()
+            $('#play-box').empty()
 
             let location = $('#location').val();
+
+            alert('떠나보자!!!');
+
+
+            // 2. 서버에 1) POST 방식으로, 2) /api/food 라는 주소로 검색어를 보내고 foods_list를 요청
+            $.ajax({
+                type: "POST",
+                url: "/api/play",
+                data: { location_give: location },
+                success: function (response) {
+                    // 3. 서버가 돌려준 foods_list를 foods라는 변수에 저장
+                    let plays = response['plays_list']
+
+                    // 4. for 문을 활용하여 food 배열의 요소를 차례대로 조회
+                    for (let i = 0; i < plays.length; i++) {
+                        let play = plays[i]
+                        // 5. food[i] 요소의 여러 값을 활용하여 지정
+                        let title = play['title']
+                        let link = play['link']
+                        let address = play['address']
+                        let telephone = play['telephone']
+
+                        // 6. 맛집 카드를 만듬
+                        let temp_html = `            <div class="card tempc">
+                <div class="card-body">
+                    <h5 class="card-title">${title}</h5>
+                    <p class="card-text">${address}</p>
+                    <p class="card-text">${link}</p>
+                </div>              
+                </div>
+            </div>
+`
+                        // 7. #food-box에 temp_html을 붙임
+                        $('#play-box').append(temp_html)
+                    }
+                }
+            });
 
             // 2. 서버에 1) POST 방식으로, 2) /api/food 라는 주소로 검색어를 보내고 foods_list를 요청
             $.ajax({
@@ -88,23 +153,21 @@
                 success: function (response) {
                     // 3. 서버가 돌려준 foods_list를 foods라는 변수에 저장
                     let foods = response['foods_list']
-                    if (response['result'] == 'success') {
-                        alert(response['msg']);
-                    }
+
                     // 4. for 문을 활용하여 food 배열의 요소를 차례대로 조회
                     for (let i = 0; i < foods.length; i++) {
                         let food = foods[i]
                         // 5. food[i] 요소의 여러 값을 활용하여 지정
                         let title = food['title']
                         let link = food['link']
-                        let roadAddress = food['roadAddress']
+                        let address = food['address']
                         let telephone = food['telephone']
 
                         // 6. 맛집 카드를 만듬
-                        let temp_html = `            <div class="card">
+                        let temp_html = `            <div class="card tempc">
                 <div class="card-body">
                     <h5 class="card-title">${title}</h5>
-                    <p class="card-text">${roadAddress}</p>
+                    <p class="card-text">${address}</p>
                     <p class="card-text">${link}</p>
                 </div>              
                 </div>
@@ -112,6 +175,40 @@
 `
                         // 7. #food-box에 temp_html을 붙임
                         $('#food-box').append(temp_html)
+                    }
+                }
+            });
+
+            // 2. 서버에 1) POST 방식으로, 2) /api/food 라는 주소로 검색어를 보내고 foods_list를 요청
+            $.ajax({
+                type: "POST",
+                url: "/api/home",
+                data: { location_give: location },
+                success: function (response) {
+                    // 3. 서버가 돌려준 foods_list를 foods라는 변수에 저장
+                    let homes = response['homes_list']
+
+                    // 4. for 문을 활용하여 food 배열의 요소를 차례대로 조회
+                    for (let i = 0; i < homes.length; i++) {
+                        let home = homes[i]
+                        // 5. food[i] 요소의 여러 값을 활용하여 지정
+                        let title = home['title']
+                        let link = home['link']
+                        let address = home['address']
+                        let telephone = home['telephone']
+
+                        // 6. 맛집 카드를 만듬
+                        let temp_html = `            <div class="card tempc">
+    <div class="card-body">
+        <h5 class="card-title">${title}</h5>
+        <p class="card-text">${address}</p>
+        <p class="card-text">${link}</p>
+    </div>              
+    </div>
+</div>
+`
+                        // 7. #food-box에 temp_html을 붙임
+                        $('#home-box').append(temp_html)
                     }
                 }
             });
@@ -131,23 +228,49 @@
                     <input type="text" class="form-control" placeholder="여행지를 입력하세요." aria-label="Recipient's username"
                         aria-describedby="basic-addon2" id="location">
                     <div class="input-group-append">
-                        <button onclick="show_food()" class="btn btn-outline-primary" type="button">GO!</button>
+                        <button onclick="show_everything()" class="btn btn-outline-primary" type="button">GO!</button>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="card-columns" id="food-box">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Card title that wraps to a new line</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                        additional
-                        content. This content is a little bit longer.</p>
+        <div class="temp_search">
+            <div class="temp0">
+                <div>
+                    <h3>#명소</h3>
+                </div>
+                <div class="tempc" id="play-box">
+                    <div class="card-body">
+                        <h5 class="card-title">명소를 나타내줄게~</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="temp1">
+                <div>
+                    <h3 text-alig>#숙소</h3>
+                </div>
+                <div class="tempc" id="home-box">
+                    <div class="card-body">
+                        <h5 class="card-title">숙소를 나타내줄게~</h5>
+                        <p class="card-text"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="temp2">
+                <div>
+                    <h3 text-alig>#맛집</h3>
+                </div>
+                <div class="tempc" id="food-box">
+                    <div class="card-body">
+                        <h5 class="card-title">맛집을 나타내줄게~</h5>
+                        <p class="card-text"></p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
+
 </body>
 
 </html>
