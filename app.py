@@ -1,14 +1,19 @@
-from pymongo import MongoClient
 from bs4 import BeautifulSoup
 import requests
 from urllib.parse import urlparse
 import json
+with open('config.json', 'r') as f:
+    config = json.load(f)
 from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
 
-
-client = MongoClient('localhost', 27017)
-db = client.dbsparta
+# Naver API Client_id, secret 불러오기
+client_id0 = config['DEFAULT']['client_id0']
+client_id1 = config['DEFAULT']['client_id1'] 
+client_id2 = config['DEFAULT']['client_id2'] 
+client_secret0 = config['DEFAULT']['client_secret0'] 
+client_secret1 = config['DEFAULT']['client_secret1'] 
+client_secret2 = config['DEFAULT']['client_secret2'] 
 
 # HTML을 주는 부분
 
@@ -26,8 +31,8 @@ def plays_list():
     # keyword = request.form['title_give'] 형식을 이용 POST 요청값을 검색어에 반영
     location_receive = request.form['location_give']
     url = "https://openapi.naver.com/v1/search/local?query=" + location_receive + "명소" + "&display=5" + "&sort=comment"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
-    client_id = ""
-    client_secret = ""
+    client_id = client_id0
+    client_secret = client_secret0
     result0 = requests.get(urlparse(url).geturl(), headers={
                            "X-Naver-Client-Id": client_id, "X-Naver-Client-Secret": client_secret})  # 검색결과(requests 함수 사용)
     data0 = result0.json()  # 결과값을 json으로 나타내어 data에 저장
@@ -44,8 +49,8 @@ def foods_list():
     # keyword = request.form['title_give'] 형식을 이용 POST 요청값을 검색어에 반영
     location_receive = request.form['location_give']
     url = "https://openapi.naver.com/v1/search/local?query=" + location_receive + " 맛집" + "&display=5" + "&sort=comment"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
-    client_id = ""
-    client_secret = ""
+    client_id = client_id1
+    client_secret = client_secret1
     result1 = requests.get(urlparse(url).geturl(), headers={
                            "X-Naver-Client-Id": client_id, "X-Naver-Client-Secret": client_secret})  # 검색결과(requests 함수 사용)
     data1 = result1.json()  # 결과값을 json으로 나타내어 data에 저장
@@ -62,8 +67,8 @@ def homes_list():
     # keyword = request.form['title_give'] 형식을 이용 POST 요청값을 검색어에 반영
     location_receive = request.form['location_give']
     url = "https://openapi.naver.com/v1/search/local?query=" + location_receive + "숙소" + "&display=5" + "&sort=comment"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
-    client_id = ""
-    client_secret = ""
+    client_id = client_id2
+    client_secret = client_secret2
     result2 = requests.get(urlparse(url).geturl(), headers={
                            "X-Naver-Client-Id": client_id, "X-Naver-Client-Secret": client_secret})  # 검색결과(requests 함수 사용)
     data2 = result2.json()  # 결과값을 json으로 나타내어 data에 저장
