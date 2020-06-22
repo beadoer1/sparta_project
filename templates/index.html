@@ -97,6 +97,10 @@
             margin: 0px 0px 10px 0px;
             border-radius: 15px;
         }
+
+        .imagesize {
+            background-size:auto; 
+        }
     </style>
     <script>
 
@@ -196,7 +200,7 @@
                         let link = home['link']
                         let address = home['address']
                         let telephone = home['telephone']
-                        // let image = home['url_image']
+                        let image = home['url_image']
 
                         // 6. 맛집 카드를 만듬
                         let temp_html = `            <div class="card tempc">
@@ -204,6 +208,8 @@
         <h5 class="card-title">${title}</h5>
         <p class="card-text">${address}</p>
         <p class="card-text">${link}</p>
+        <img class= "imagesize" src="${image}">
+
     </div>              
     </div>
 </div>
