@@ -73,7 +73,8 @@ def homes_list():
     result2 = requests.get(urlparse(url).geturl(), headers={
                            "X-Naver-Client-Id": client_id, "X-Naver-Client-Secret": client_secret})  # 검색결과(requests 함수 사용)
     data2 = result2.json()  # 결과값을 json으로 나타내어 data에 저장
-  
+    
+    def 
     for i in data2['items']:
         # meta tag를 스크래핑하기
         headers = {
@@ -81,12 +82,15 @@ def homes_list():
         data = requests.get(i['link'], headers = headers, verify=True)
         soup = BeautifulSoup(data.text, 'html.parser')
         og_image = soup.select_one('meta[property="og:image"]')
-        i['image'] = og_image
+        try:
+            url_image = og_image['content']
+        except TypeError:
+            url_image = None
+        i['image'] = url_image
         print(i)
+
+    # return jsonify({'result': 'success', 'homes_list': jib})
+
         
-    jib = data2['items']    
-    return jsonify({'result': 'success', 'homes_list': jib})
-
-
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
