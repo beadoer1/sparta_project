@@ -99,7 +99,13 @@
         }
 
         .imagesize {
-            background-size:auto; 
+            width: 110px;
+            height: 110px; 
+            margin: 15px 10px 0px 0px;
+        }
+
+        .box {
+            width: 380px;
         }
     </style>
     <script>
@@ -132,16 +138,19 @@
                         let link = play['link']
                         let address = play['address']
                         let telephone = play['telephone']
+                        let image = play['image']
 
                         // 6. 맛집 카드를 만듬
-                        let temp_html = `            <div class="card tempc">
-                <div class="card-body">
-                    <h5 class="card-title">${title}</h5>
-                    <p class="card-text">${address}</p>
-                    <p class="card-text">${link}</p>
-                </div>              
-                </div>
-            </div>
+                        let temp_html = `            <div class="card tempc temp_search">
+    <div class="card-body box">
+        <h5 class="card-title">${title}</h5>
+        <p class="card-text">${address}</p>
+        <p class="card-text">${link}</p>
+    </div>              
+    <div>
+        <img class= "imagesize" src="${image}">
+    </div>
+    </div>
 `
                         // 7. #food-box에 temp_html을 붙임
                         $('#play-box').append(temp_html)
@@ -166,16 +175,19 @@
                         let link = food['link']
                         let address = food['address']
                         let telephone = food['telephone']
+                        let image = food['image']
 
                         // 6. 맛집 카드를 만듬
-                        let temp_html = `            <div class="card tempc">
-                <div class="card-body">
-                    <h5 class="card-title">${title}</h5>
-                    <p class="card-text">${address}</p>
-                    <p class="card-text">${link}</p>
-                </div>              
-                </div>
-            </div>
+                        let temp_html = `            <div class="card tempc temp_search">
+    <div class="card-body box">
+        <h5 class="card-title">${title}</h5>
+        <p class="card-text">${address}</p>
+        <p class="card-text">${link}</p>
+    </div>              
+    <div>
+        <img class= "imagesize" src="${image}">
+    </div>
+    </div>
 `
                         // 7. #food-box에 temp_html을 붙임
                         $('#food-box').append(temp_html)
@@ -200,19 +212,19 @@
                         let link = home['link']
                         let address = home['address']
                         let telephone = home['telephone']
-                        let image = home['url_image']
+                        let image = home['image']
 
                         // 6. 맛집 카드를 만듬
-                        let temp_html = `            <div class="card tempc">
-    <div class="card-body">
+                        let temp_html = `            <div class="card tempc temp_search">
+    <div class="card-body box">
         <h5 class="card-title">${title}</h5>
         <p class="card-text">${address}</p>
         <p class="card-text">${link}</p>
-        <img class= "imagesize" src="${image}">
-
     </div>              
+    <div>
+        <img class= "imagesize" src="${image}">
     </div>
-</div>
+    </div>
 `
                         // 7. #food-box에 temp_html을 붙임
                         $('#home-box').append(temp_html)

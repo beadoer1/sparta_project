@@ -31,17 +31,38 @@ def plays_list():
     # keyword = request.form['title_give'] 형식을 이용 POST 요청값을 검색어에 반영
     location_receive = request.form['location_give']
     url = "https://openapi.naver.com/v1/search/local?query=" + location_receive + \
-        "명소" + "&display=3" + "&sort=comment"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
+        "명소" + "&display=10"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
     client_id = client_id0
     client_secret = client_secret0
     result0 = requests.get(urlparse(url).geturl(), headers={
                            "X-Naver-Client-Id": client_id, "X-Naver-Client-Secret": client_secret})  # 검색결과(requests 함수 사용)
     data0 = result0.json()  # 결과값을 json으로 나타내어 data에 저장
-    nolja = data0['items']  # data 내 items 항목만 bob에 저장
+
+    for i in data0['items']:
+        # meta tag를 스크래핑하기
+        headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+        url0 = i['link']
+        try:
+            datap = requests.get(url0, headers=headers, verify= False)
+            soup = BeautifulSoup(datap.text, 'html.parser')
+            og_image = soup.select_one('meta[property="og:image"]')
+            url_image = og_image['content']
+        except requests.exceptions.MissingSchema:
+            url_image = '/static/title_picture.jpg'
+        except requests.exceptions.ConnectionError:
+            url_image = '/static/title_picture.jpg'            
+        except TypeError:
+            url_image = '/static/title_picture.jpg'
+
+        i['image'] = url_image
+
+    nolja = data0['items']
+    # print(nolja)
+
     return jsonify({'result': 'success', 'plays_list': nolja})
 
 # POST 값을 이용해 검색어를 받아 검색결과를 return
-
 
 @app.route('/api/food', methods=['POST'])
 def foods_list():
@@ -49,17 +70,37 @@ def foods_list():
     # keyword = request.form['title_give'] 형식을 이용 POST 요청값을 검색어에 반영
     location_receive = request.form['location_give']
     url = "https://openapi.naver.com/v1/search/local?query=" + location_receive + \
-        " 맛집" + "&display=3" + "&sort=comment"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
+        " 맛집" + "&display=10"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
     client_id = client_id1
     client_secret = client_secret1
     result1 = requests.get(urlparse(url).geturl(), headers={
                            "X-Naver-Client-Id": client_id, "X-Naver-Client-Secret": client_secret})  # 검색결과(requests 함수 사용)
     data1 = result1.json()  # 결과값을 json으로 나타내어 data에 저장
-    bob = data1['items']  # data 내 items 항목만 bob에 저장
-    return jsonify({'result': 'success', 'foods_list': bob, 'msg': '떠나보자!!!!'})
+
+    for i in data1['items']:
+        # meta tag를 스크래핑하기
+        headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+        url1 = i['link']
+        try:
+            dataf = requests.get(url1, headers=headers, verify= False)
+            soup = BeautifulSoup(dataf.text, 'html.parser')
+            og_image = soup.select_one('meta[property="og:image"]')
+            url_image = og_image['content']
+        except requests.exceptions.MissingSchema:
+            url_image = '/static/title_picture.jpg'
+        except requests.exceptions.ConnectionError:
+            url_image = '/static/title_picture.jpg'
+        except TypeError:
+            url_image = '/static/title_picture.jpg'
+        i['image'] = url_image
+
+    bob = data1['items']
+    # print(bob)
+
+    return jsonify({'result': 'success', 'foods_list': bob})
 
 # POST 값을 이용해 검색어를 받아 검색결과를 return
-
 
 @app.route('/api/home', methods=['POST'])
 def homes_list():
@@ -67,7 +108,7 @@ def homes_list():
     # keyword = request.form['title_give'] 형식을 이용 POST 요청값을 검색어에 반영
     location_receive = request.form['location_give']
     url = "https://openapi.naver.com/v1/search/local?query=" + location_receive + \
-        "숙소" + "&display=15" + "&sort=comment"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
+        "숙소" + "&display=10"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
     client_id = client_id2
     client_secret = client_secret2
     result2 = requests.get(urlparse(url).geturl(), headers={
@@ -78,17 +119,22 @@ def homes_list():
         # meta tag를 스크래핑하기
         headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-        data = requests.get(i['link'], headers=headers, verify= False)
-        soup = BeautifulSoup(data.text, 'html.parser')
-        og_image = soup.select_one('meta[property="og:image"]')
+        url2 = i['link']
         try:
+            datah = requests.get(url2, headers=headers, verify= False)
+            soup = BeautifulSoup(datah.text, 'html.parser')
+            og_image = soup.select_one('meta[property="og:image"]')
             url_image = og_image['content']
+        except requests.exceptions.MissingSchema:
+            url_image = '/static/title_picture.jpg'
+        except requests.exceptions.ConnectionError:
+            url_image = '/static/title_picture.jpg'            
         except TypeError:
-            url_image = None
+            url_image = '/static/title_picture.jpg'
         i['image'] = url_image
 
     jib = data2['items']
-    print(jib)
+    # print(jib)
 
     return jsonify({'result': 'success', 'homes_list': jib})
 
