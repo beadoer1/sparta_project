@@ -31,7 +31,7 @@ def plays_list():
     # keyword = request.form['title_give'] 형식을 이용 POST 요청값을 검색어에 반영
     location_receive = request.form['location_give']
     url = "https://openapi.naver.com/v1/search/local?query=" + location_receive + \
-        "명소" + "&display=10"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
+        "명소" + "&display=20" + "&sort=comment"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
     client_id = client_id0
     client_secret = client_secret0
     result0 = requests.get(urlparse(url).geturl(), headers={
@@ -44,16 +44,18 @@ def plays_list():
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
         url0 = i['link']
         try:
-            datap = requests.get(url0, headers=headers, verify= False)
-            soup = BeautifulSoup(datap.text, 'html.parser')
+            data = requests.get(url0, headers=headers, verify= False)
+            soup = BeautifulSoup(data.text, 'html.parser')
             og_image = soup.select_one('meta[property="og:image"]')
             url_image = og_image['content']
         except requests.exceptions.MissingSchema:
-            url_image = '/static/title_picture.jpg'
+            url_image = '/static/none_pic.jpg'
         except requests.exceptions.ConnectionError:
-            url_image = '/static/title_picture.jpg'            
+            url_image = '/static/none_pic.jpg'     
+        except requests.exceptions.InvalidURL:
+            url_image = '/static/none_pic.jpg'                      
         except TypeError:
-            url_image = '/static/title_picture.jpg'
+            url_image = '/static/none_pic.jpg'
 
         i['image'] = url_image
 
@@ -70,7 +72,7 @@ def foods_list():
     # keyword = request.form['title_give'] 형식을 이용 POST 요청값을 검색어에 반영
     location_receive = request.form['location_give']
     url = "https://openapi.naver.com/v1/search/local?query=" + location_receive + \
-        " 맛집" + "&display=10"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
+        " 맛집" + "&display=20" + "&sort=comment"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
     client_id = client_id1
     client_secret = client_secret1
     result1 = requests.get(urlparse(url).geturl(), headers={
@@ -83,16 +85,18 @@ def foods_list():
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
         url1 = i['link']
         try:
-            dataf = requests.get(url1, headers=headers, verify= False)
-            soup = BeautifulSoup(dataf.text, 'html.parser')
+            data = requests.get(url1, headers=headers, verify= False)
+            soup = BeautifulSoup(data.text, 'html.parser')
             og_image = soup.select_one('meta[property="og:image"]')
             url_image = og_image['content']
         except requests.exceptions.MissingSchema:
-            url_image = '/static/title_picture.jpg'
+            url_image = '/static/none_pic.jpg'
         except requests.exceptions.ConnectionError:
-            url_image = '/static/title_picture.jpg'
+            url_image = '/static/none_pic.jpg'
+        except requests.exceptions.InvalidURL:
+            url_image = '/static/none_pic.jpg'             
         except TypeError:
-            url_image = '/static/title_picture.jpg'
+            url_image = '/static/none_pic.jpg'
         i['image'] = url_image
 
     bob = data1['items']
@@ -108,7 +112,7 @@ def homes_list():
     # keyword = request.form['title_give'] 형식을 이용 POST 요청값을 검색어에 반영
     location_receive = request.form['location_give']
     url = "https://openapi.naver.com/v1/search/local?query=" + location_receive + \
-        "숙소" + "&display=10"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
+        "숙소" + "&display=20" + "&sort=comment"  # 검색어 삽입 및 '맛집'과 조건들 삽입하여 검색
     client_id = client_id2
     client_secret = client_secret2
     result2 = requests.get(urlparse(url).geturl(), headers={
@@ -121,16 +125,18 @@ def homes_list():
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
         url2 = i['link']
         try:
-            datah = requests.get(url2, headers=headers, verify= False)
-            soup = BeautifulSoup(datah.text, 'html.parser')
+            data = requests.get(url2, headers=headers, verify= False)
+            soup = BeautifulSoup(data.text, 'html.parser')
             og_image = soup.select_one('meta[property="og:image"]')
             url_image = og_image['content']
         except requests.exceptions.MissingSchema:
-            url_image = '/static/title_picture.jpg'
+            url_image = '/static/none_pic.jpg'
         except requests.exceptions.ConnectionError:
-            url_image = '/static/title_picture.jpg'            
+            url_image = '/static/none_pic.jpg'    
+        except requests.exceptions.InvalidURL:
+            url_image = '/static/none_pic.jpg'                     
         except TypeError:
-            url_image = '/static/title_picture.jpg'
+            url_image = '/static/none_pic.jpg'
         i['image'] = url_image
 
     jib = data2['items']
