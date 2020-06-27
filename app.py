@@ -48,11 +48,11 @@ def plays_list():
             soup = BeautifulSoup(data.text, 'html.parser')
             og_image = soup.select_one('meta[property="og:image"]')
             url_image = og_image['content']
-        except requests.exceptions.MissingSchema:
+        except requests.exceptions.MissingSchema: # link 값 없는 경우로 추정
             url_image = '/static/none_pic.jpg'
         except requests.exceptions.ConnectionError:
             url_image = '/static/none_pic.jpg'     
-        except requests.exceptions.InvalidURL:
+        except requests.exceptions.InvalidURL: # link 혹은 og:image 의 url이 없는 url일 경우로 추정
             url_image = '/static/none_pic.jpg'                      
         except TypeError:
             url_image = '/static/none_pic.jpg'

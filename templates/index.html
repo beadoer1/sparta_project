@@ -29,6 +29,8 @@
 
     <!-- 구글폰트 -->
     <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
 
     <!-- style -->
     <style>
@@ -58,10 +60,26 @@
             font-family: 'East Sea Dokdo', cursive;
         }
 
+        h2 {
+            font-family: 'Gugi', cursive;
+        }
+
+        h5 {
+            font-size: 25px;
+            font-family: 'Gaegu', cursive;
+        }
+
         .search {
             width: 500px;
             padding-top: 200px;
             margin: auto;
+        }
+
+        .text {
+            font-size: 25px;
+            font-family: 'Gugi', cursive;
+            text-align: center;
+            letter-spacing: 3px;
         }
 
         .btn {
@@ -102,6 +120,7 @@
             width: 110px;
             height: 110px; 
             margin: 15px 10px 0px 0px;
+            border-radius: 10px;
         }
 
         .box {
@@ -136,16 +155,19 @@
                         let play = plays[i]
                         // 5. food[i] 요소의 여러 값을 활용하여 지정
                         let title = play['title']
-                        let link = play['link']
+                        let description = play['description']
                         let address = play['address']
                         let telephone = play['telephone']
+                        let link = play['link']
                         let image = play['image']
 
-                        // 6. 맛집 카드를 만듬
+                        // 6. 명소 카드를 만듬
                         let temp_html = `            <div class="card tempc temp_search">
     <div class="card-body box">
         <h5 class="card-title">${title}</h5>
+        <p class="card-text">${description}</p>
         <p class="card-text">${address}</p>
+        <p class="card-text">${telephone}</p>
         <a href="${link}" target="_blank">${link}</a>
     </div>              
     <div>
@@ -173,16 +195,19 @@
                         let food = foods[i]
                         // 5. food[i] 요소의 여러 값을 활용하여 지정
                         let title = food['title']
-                        let link = food['link']
+                        let description = food['description']
                         let address = food['address']
                         let telephone = food['telephone']
+                        let link = food['link']
                         let image = food['image']
 
                         // 6. 맛집 카드를 만듬
                         let temp_html = `            <div class="card tempc temp_search">
     <div class="card-body box">
         <h5 class="card-title">${title}</h5>
+        <p class="card-text">${description}</p>
         <p class="card-text">${address}</p>
+        <p class="card-text">${telephone}</p>
         <a href="${link}" target="_blank">${link}</a>
     </div>              
     <div>
@@ -210,16 +235,19 @@
                         let home = homes[i]
                         // 5. food[i] 요소의 여러 값을 활용하여 지정
                         let title = home['title']
-                        let link = home['link']
+                        let description = home['description']
                         let address = home['address']
                         let telephone = home['telephone']
+                        let link = home['link']
                         let image = home['image']
 
                         // 6. 맛집 카드를 만듬
                         let temp_html = `            <div class="card tempc temp_search">
     <div class="card-body box">
         <h5 class="card-title">${title}</h5>
+        <p class="card-text">${description}</p>
         <p class="card-text">${address}</p>
+        <p class="card-text">${telephone}</p>
         <a href="${link}" target="_blank">${link}</a>
     </div>              
     <div>
@@ -245,7 +273,7 @@
             <h1>여행, 어디까지 가봤니!?</h1>
             <div class="search">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="여행지를 입력하세요." aria-label="Recipient's username"
+                    <input type="text" class="text form-control" placeholder="여행지를 입력하세요." aria-label="Recipient's username"
                         aria-describedby="basic-addon2" id="location">
                     <div class="input-group-append">
                         <button onclick="show_everything()" class="btn btn-outline-primary" type="button">GO!</button>
@@ -256,7 +284,7 @@
         <div class="temp_search">
             <div class="temp0">
                 <div>
-                    <h3>#명소</h3>
+                    <h2>#명소</h2>
                 </div>
                 <div class="tempc" id="play-box">
                     <div class="card-body">
@@ -267,7 +295,7 @@
             </div>
             <div class="temp1">
                 <div>
-                    <h3 text-alig>#맛집</h3>
+                    <h2 text-alig>#맛집</h2>
                 </div>
                 <div class="tempc" id="food-box">
                     <div class="card-body">
@@ -278,7 +306,7 @@
             </div>
             <div class="temp2">
                 <div>
-                    <h3 text-alig>#숙소</h3>
+                    <h2 text-alig>#숙소</h2>
                 </div>
                 <div class="tempc" id="home-box">
                     <div class="card-body">
