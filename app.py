@@ -47,7 +47,10 @@ def plays_list():
             data = requests.get(url0, headers=headers, verify= False)
             soup = BeautifulSoup(data.text, 'html.parser')
             og_image = soup.select_one('meta[property="og:image"]')
-            url_image = og_image['content']
+            if 'http' in og_image['content']:
+                url_image = og_image['content']
+            else:
+                url_image = '/static/none_pic.jpg'
         except requests.exceptions.MissingSchema: # link 값 없는 경우로 추정
             url_image = '/static/none_pic.jpg'
         except requests.exceptions.ConnectionError:
@@ -88,7 +91,10 @@ def foods_list():
             data = requests.get(url1, headers=headers, verify= False)
             soup = BeautifulSoup(data.text, 'html.parser')
             og_image = soup.select_one('meta[property="og:image"]')
-            url_image = og_image['content']
+            if 'http' in og_image['content']:
+                url_image = og_image['content']
+            else:
+                url_image = '/static/none_pic.jpg'
         except requests.exceptions.MissingSchema:
             url_image = '/static/none_pic.jpg'
         except requests.exceptions.ConnectionError:
@@ -128,7 +134,10 @@ def homes_list():
             data = requests.get(url2, headers=headers, verify= False)
             soup = BeautifulSoup(data.text, 'html.parser')
             og_image = soup.select_one('meta[property="og:image"]')
-            url_image = og_image['content']
+            if 'http' in og_image['content']:
+                url_image = og_image['content']
+            else:
+                url_image = '/static/none_pic.jpg'
         except requests.exceptions.MissingSchema:
             url_image = '/static/none_pic.jpg'
         except requests.exceptions.ConnectionError:
